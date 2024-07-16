@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Bootloader.
@@ -108,6 +109,16 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      revanth = import ./home.nix;
+    };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+
+
   ### clean system
   nix = {
    settings.auto-optimise-store = true;
@@ -126,14 +137,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  	wget
+    wget
     steam
     protonup-qt
     brave
     vulkan-tools
-    gcc14
-    git
     ludusavi
     rclone
     killall
@@ -141,23 +149,18 @@
     stow
     tmux
     gh
-    zsh
     upscayl
     vkbasalt
     goverlay
     mangohud
-    neovim
     wl-clipboard
     unzip
+    home-manager
     yt-dlp
+    zed-editor
     valgrind
-    gdb
-    fish
-    libclang
     mesa
-    libGL
     zoxide
-    cmake
     wine
     python3
     pipx
@@ -165,10 +168,9 @@
     obs-studio
     discord
     fzf
-    kdePackages.discover
+    qbittorrent  
     lutris
     android-tools
-    gnumake
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -198,3 +200,5 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 }
+
+
