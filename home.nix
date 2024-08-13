@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -11,8 +11,52 @@
   home.packages = with pkgs; [
     zsh
     fish
+    wget
+    protonup-qt
     git
+    gh
+    yt-dlp
+    zoxide
+    fzf
+    discord
+    gzdoom
+    r2modman
+    vkbasalt
+    vkbasalt-cli
+    goverlay
+    mangohud
+    upscayl
+    tmux
+    stow
+    eza
+    killall
+    alacritty
+    obs-studio
+    lutris
+    p7zip
+    ludusavi
+    wl-clipboard
+    unzip
+    qbittorrent  
+    rclone
+    mesa
+    vlc
+    mpv
+    ffmpeg
+    python3
   ];
+
+  programs.brave = {
+    enable = true;
+    extensions = [
+      { id = "dhdgffkkebhmkfjojejmpbldmpobfkfo"; } # Tampermonkey
+      { id = "enboaomnljigfhfjfoalacienlhjlfil"; } # Untrap for YouTube
+      { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return YouTube Dislikes
+      { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # Sponsor Block
+      { id = "lhhohkfofnfbnildpdhhjeeenapeceei"; } # AudD Music Recognition
+      { id = "cldmemdnllncchfahbcnjijheaolemfk"; } # Foxified (YT Video Downloader)
+    ];
+  };
 
   programs.neovim = 
     let

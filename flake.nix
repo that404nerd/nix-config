@@ -11,21 +11,18 @@
 
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let 
     system = "x86_64-linux";
   pkgs = import nixpkgs {
     inherit system;
-    config = {
-      allowUnfree = true;
-    };
   };
 
   in
   {
      nixosConfigurations = {
        revanth-nixos = nixpkgs.lib.nixosSystem {
-         specialArgs = { inherit inputs system; };
+         specialArgs = { inherit inputs; };
 
          modules = [
            ./configuration.nix
